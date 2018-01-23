@@ -41,7 +41,7 @@ row.names(g0) <- SWR0[,4]
 ```{r}
 removal.stat2 <- feature.removal(g1, g0, cutoff1=0.95, cutoff0=0.95, offset=c(0.25, 0.5, 1, 2, 4))
 ```
-It is the core function of the package. The first four parameter is required. A vector of `offset` means doing the whole computational process with different offsets *respectively*, and you can also define only one numeric number to `offset`. To get a overall information of features, the iteration will not stop until there is no feature to remove.
+It is the core function of the package. The first four parameters are required. A vector of `offset` means doing the whole computational process with different offsets *respectively*, and you can also define only one numeric number to `offset`. To get a overall information of features, the iteration will not stop until there is no feature to remove.
 
 - You can also lower `cutoff0` and higher `cutoff1` to reduce overfitting. Why? You can type `?feature.removal` to see the whole algorithm.
 
