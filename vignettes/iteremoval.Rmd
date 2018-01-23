@@ -1,0 +1,74 @@
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{An introduction to iteremoval}
+-->
+
+# iteremoval
+The package provides a flexible algorithm to iteratively screen features in consideration of overfitting and overall performance. Two distinct groups of observations are required. It is originally tailored for methylation locus screening of NGS data, and it can also be used as a generic method for feature selection. Each step of the algorithm provides a default function for simple implemention, and it is able to be replaced by a user defined method.
+
+## Install
+To install this package, start R and enter:
+
+```{r eval=FALSE}
+# try http:// if https:// URLs are not supported
+source("https://bioconductor.org/biocLite.R")
+biocLite("iteremoval")
+```
+
+## An example
+An example is demonstrated to show how the package works. 
+
+The input files are two datasets included in the package, `SWR1`(malignant individuals) and `SWR0`(normal individuals). Each row of the two datasets indicates a gene locus, and the columns are the probabilities. 
+
+We expect that higher the value means higher the probability of having a disease. However, we discover that not all genes are related to the disease. Therefore, we use the package `iteremoval` to select the gene locus with high probability in malignant samples and low probability in normal samples. 
+
+`iteremoval` is oriented to find a dataset to classify two different groups, and the feature that removed in each iteration is comprehensively considered according to all observations. If the observations have subtypes, the process might generate a feature set favoring all subtypes with the default settings. You can also define the function that each step uses to meet your requirement.
+
+### Pre-process data
+```{r}
+library(iteremoval)
+
+# only numeric observation data are allowed
+g1 = SWR1[,5:ncol(SWR1)]
+g0 = SWR0[,5:ncol(SWR0)]
+
+# row name is regarded as feature label
+row.names(g1) <- SWR1[,4]
+row.names(g0) <- SWR0[,4]
+```
+
+### Removing features
+```{r}
+removal.stat2 <- feature.removal(g1, g0, cutoff1=0.95, cutoff0=0.95, offset=c(0.25, 0.5, 1, 2, 4))
+```
+It is the core function of the package. The first four parameter is required. A vector of `offset` means doing the whole computational process with different offsets *respectively*, and you can also define only one numeric number to `offset`. To get a overall information of features, the iteration will not stop until there is no feature to remove.
+
+- You can also lower `cutoff0` and higher `cutoff1` to reduce overfitting. Why? You can type `?feature.removal` to see the whole algorithm.
+
+### Ploting the iteration trace of removed features' scores
+It is useful to visulize how each feature is removed in the iterative process. The package provides a way to plot the scores of features being removed in each iteration.
+
+```{r echo=TRUE}
+ggiteration_trace(removal.stat2) + theme_bw()
+```
+
+`ggiteration_trace` returns a ggplot2 object, so `+` is used in the same way as `ggplot2` package.
+
+X-axis is the iteration index, and Y-axis is the score of the feature being removed, and the legend is the offset you passed to `feature.removal`. Normally, you can stop removing features from the index of which the socres fluctuate drastically.
+
+### Generating the feature list
+Once you confirm the iteration index cutoff, you can generate the feature list. Since using a vector of `offset` and the features are removed with different `cutoff` seperately, the remaining feature lists are not unique for multiple cutoffs. Thus, we compute the feature prevalence for the feature lists, using:
+
+```{r echo=TRUE}
+?feature.prevalence
+features2 <- feature.prevalence(removal.stat2, index=255, hist.plot=TRUE)
+features2
+```
+
+### Screening the features with prevalence
+At last, you can see the prevalence histogram of the features because of multiple offsets. You can specify a cutoff for the prevalence, and output the final feature list.
+
+```{r echo=TRUE}
+screened.features <- feature.screen(features2, prevalence=4)
+screened.features
+```

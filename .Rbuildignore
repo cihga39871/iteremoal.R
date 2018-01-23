@@ -1,0 +1,7 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^.vscode$
+.*\.Rcheck$
+.*\.tar\.gz$
+^\.git$
+^\.Rhistory$

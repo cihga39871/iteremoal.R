@@ -1,0 +1,34 @@
+#!/usr/bin/sh
+
+echo \\n\\n---------- Project directory ----------
+projroot=$(cd "$(dirname "$0")"; pwd)
+echo $projroot
+
+### refresh man/*.Rd using roxygen2
+echo \\n\\n---------- Refreshing manuals ----------
+R -q -e "setwd('$projroot'); library(devtools); document()"
+
+### refresh html vignette
+echo \\n\\n---------- Refreshing vignettes ----------
+cd $projroot/..
+R CMD build $projroot # generate html in gz file
+
+mkdir tmp
+version=`awk -F ': ' '/Version/{print $2}' $projroot/DESCRIPTION`
+mv iteremoval_${version}.tar.gz tmp/
+cd tmp
+tar zxvf iteremoval_${version}.tar.gz
+touch $projroot/inst/doc/* # avoid warning: Files in the 'vignettes' directory newer than all files in 'inst/doc'
+cp iteremoval/inst/doc/*html $projroot/vignettes/
+cd ..
+rm -r tmp/
+
+### build
+echo \\n\\n---------- R CMD build ----------
+R CMD build --no-build-vignettes $projroot
+
+echo \\n\\n---------- R CMD check ----------
+R CMD check iteremoval_${version}.tar.gz
+
+echo \\n\\n---------- R CMD BiocCheck ----------
+R CMD BiocCheck iteremoval_${version}.tar.gz
