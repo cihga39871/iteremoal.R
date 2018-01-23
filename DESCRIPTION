@@ -13,8 +13,8 @@ Imports:
     graphics,
     utils,
     knitr
-URL: https://github.com/cihga39871/iteremoal.R
-BugReports: https://github.com/cihga39871/iteremoal.R/issues
+URL: https://github.com/cihga39871/iteremoval
+BugReports: https://github.com/cihga39871/iteremoval/issues
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
