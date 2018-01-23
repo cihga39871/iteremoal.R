@@ -212,7 +212,7 @@ multiple.feature.removal.iteration <- function(g1.signal, g0.signal,
 #'
 #' result.complex <- feature.removal(g1, g0,
 #'     cutoff1=0.95, cutoff0=0.925, lt=">",
-#'     offset=c(0.5, 1, 2),
+#'     offset=c(0.5, 2),
 #'     weight.method="reciprocal.colSums",
 #'     scoreStandardization.method="min_max",
 #'     scoreCombine.method="linear.combine")

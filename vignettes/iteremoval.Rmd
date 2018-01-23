@@ -39,7 +39,7 @@ row.names(g0) <- SWR0[,4]
 
 ### Removing features
 ```{r}
-removal.stat2 <- feature.removal(g1, g0, cutoff1=0.95, cutoff0=0.95, offset=c(0.25, 0.5, 1, 2, 4))
+removal.stat2 <- feature.removal(g1, g0, cutoff1=0.95, cutoff0=0.95, offset=c(0.25, 0.5, 2, 4))
 ```
 It is the core function of the package. The first four parameters are required. A vector of `offset` means doing the whole computational process with different offsets *respectively*, and you can also define only one numeric number to `offset`. To get a overall information of features, the iteration will not stop until there is no feature to remove.
 
