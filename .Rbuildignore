@@ -5,3 +5,4 @@
 .*\.tar\.gz$
 ^\.git$
 ^\.Rhistory$
+^package_build$
