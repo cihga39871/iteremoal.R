@@ -3,8 +3,6 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
-\alias{\%>\%}
-\alias{reexports}
 \alias{hist}
 \alias{reexports}
 \alias{stack}
@@ -16,8 +14,6 @@ below to see their documentation.
 
 \describe{
   \item{graphics}{\code{\link[graphics]{hist}}}
-
-  \item{magrittr}{\code{\link[magrittr]{\%>\%}}}
 
   \item{utils}{\code{\link[utils]{stack}}}
 }}
