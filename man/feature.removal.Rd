@@ -4,9 +4,10 @@
 \alias{feature.removal}
 \title{Stepwise feature removal method}
 \usage{
-feature.removal(g1, g0, cutoff1, cutoff0, lt = ">", offset = 1,
-  weight.method = reciprocal.colSums, scoreStandardization.method = min_max,
-  scoreCombine.method = linear.combine)
+feature.removal(g1 = NULL, g0 = NULL, cutoff1, cutoff0, lt = ">",
+  offset = 1, weight.method = reciprocal.colSums,
+  scoreStandardization.method = min_max,
+  scoreCombine.method = linear.combine, SE = NULL, g0.filter = NULL, ...)
 }
 \arguments{
 \item{g1}{a dataframe with the row of feature, and the column of observation.
@@ -18,14 +19,15 @@ in \code{g0} are in the distinct group of \code{g1}.}
 \item{cutoff1}{\code{g1} is converted to a dataframe filled with 1 or 0 by \code{cutoff1}
 and \code{lt}. The result is called \code{g1.signal}. For example, if \code{lt=">"},
 the result of the step is \code{g1.signal <- g1 > cutoff1}. If you do not want
-the conversion, let \code{cutoff1} be \code{g1} dataframe, and \code{lt="<-"}.}
+the conversion, let \code{lt="skip"}.}
 
-\item{cutoff0}{\code{g0} is converted to dataframes of 1 or 0 by \code{cutoff0} and \code{lt}. 
-It has the same usage as \code{cutoff1}. Different \code{cutoff1} and \code{cutoff0} 
+\item{cutoff0}{\code{g0} is converted to dataframes of 1 or 0 by \code{cutoff0} and \code{lt}.
+It has the same usage as \code{cutoff1}. Different \code{cutoff1} and \code{cutoff0}
 influence overfitting.}
 
 \item{lt}{An operator to compare \code{gx} and \code{cutoffx}. Default is ">".
-Other options include ">=", "<=", "<", etc.}
+Other options include ">=", "<=", "<", etc. Additionally, \code{lt="skip"} skips the
+comparation and \code{cutoffx} will be ignored.}
 
 \item{offset}{a parameter in \code{scoreCombine.method}. It adjusts the score proportion
 of g1 and g2. Besides, \code{offset} can be a number or a numeric vector.
@@ -51,6 +53,11 @@ Specifically, \code{g1.score.feature * offset + g0.score.feature}. Besides,
 \code{offset} can be a number or a vector. If it is a vector, the overall
 iteration is done for each offset respectively.}
 
+\item{SE}{a SummarizedExperiment object.}
+
+\item{g0.filter}{a logical vector \code{g0.filter} to
+define \code{SE}'s columns that belong to \code{g0}.}
+
 \item{...}{Other parameter passed to method of expression class.}
 }
 \value{
@@ -62,27 +69,32 @@ This function screens features iteratively in consideration of
 limiting overfitting and overall performance.
 }
 \details{
-The method removes one feature/row in each iteration, and requires
-two dataframes, \code{g1} and \code{g0}, with identical row names. Normally,
-\code{g0} is the control set.\\
+The method removes one feature/row in each iteration, and requires (A)
+two dataframes, \code{g1} and \code{g0}, with identical row names; OR (B)
+A SummarizedExperiment object \code{SE}, and a logical vector \code{g0.filter} to
+define \code{SE}'s columns that belong to \code{g0}. Normally, \code{g0} is the
+control set. \code{SE} will be devided to \code{g1} and \code{g0} automatically.
+
 In each iteration, first, \code{g1} and \code{g0} are converted to dataframes
 of 1 or 0 by \code{cutoff1}, \code{cutoff0}, and \code{lt}. The converted
 dataframes are called \code{gx.singal}, and \code{x} stands for 1 and 0. If
-you do not want the conversion, let the parameters \code{cutoff1=g1,
-cutoff0=g0, lt="<-"}, or just use an alternative function
-\code{iteremoval::multiple.feature.removal.iteration}.\\
+you do not want the conversion, let \code{lt="skip"}, and cutoffs will be ignored.
+
 Second, \code{gx.weight}, weight of gx, is computed using \code{weight.method}.
 The weight is for the observations/columns, not the features/rows. The
 default weight method is \code{reciprocal.colSums}, ie.
 \code{1 / (1 + colSums(gx.signal, na.rm=T))}. You can specify your own
 function, and the first parameter of the function should be the exact word of
-\code{gx.signal}.\\
+\code{gx.signal}.
+
 Third, \code{gx.score}, the score dataframe for observations and features, is
-computed. It is the result of dot product of \code{gx.signal} and \code{gx.weight}.\\
+computed. It is the result of dot product of \code{gx.signal} and \code{gx.weight}.
+
 Then, Summing up \code{gx.score} by row, and the result is standardized with
 function \code{scoreStandardization.method}. Default standardization method is
 Min-Max, ie. normalizing the vector to 0-1 range. You can specify your own
-function, and the first parameter of the function is the sum-up dataframe.\\
+function, and the first parameter of the function is the sum-up dataframe.
+
 After that, \code{gx.score.feature}, the feature scores of gx are calculated.
 Now using \code{scoreCombine.method} to combine the feature score vectors of
 g1 and g0. This method must have three parameters in order, \code{g1.score.feature},
@@ -92,15 +104,24 @@ Specifically, \code{g1.score.feature * offset + g0.score.feature}. Besides,
 \code{offset} can be a number or a vector. If it is a vector, the overall iteration
 is done for each offset respectively.
 }
+\section{Other usages}{
+
+feature.removal(g1, g0, cutoff1, cutoff0, lt = ">", offset = 1,
+weight.method = reciprocal.colSums, scoreStandardization.method = min_max,
+scoreCombine.method = linear.combine, ...)
+
+feature.removal(SE, g0.filter, cutoff1, cutoff0, lt = ">", offset = 1,
+weight.method = reciprocal.colSums, scoreStandardization.method = min_max,
+scoreCombine.method = linear.combine, ...)
+}
+
 \examples{
 
-g1 = SWR1[,5:ncol(SWR1)]
-g0 = SWR0[,5:ncol(SWR0)]
+g1 <- SWRG1; g0 <- SWRG0
+result.simple.A <- feature.removal(g1, g0, cutoff1=0.95, cutoff0=0.95)
 
-row.names(g1) <- SWR1[,4]
-row.names(g0) <- SWR0[,4]
-
-result.simple <- feature.removal(g1, g0, cutoff1=0.95, cutoff0=0.95)
+result.simple.B <- feature.removal(SummarizedData, SummarizedData$Group==0,
+    cutoff1=0.95, cutoff0=0.95)
 
 result.complex <- feature.removal(g1, g0,
     cutoff1=0.95, cutoff0=0.925, lt=">",
@@ -109,10 +130,6 @@ result.complex <- feature.removal(g1, g0,
     scoreStandardization.method="min_max",
     scoreCombine.method="linear.combine")
 
-}
-\seealso{
-Other iteration: \code{\link{feature.removal.iteration}},
-  \code{\link{multiple.feature.removal.iteration}}
 }
 \author{
 Jiacheng CHUAN

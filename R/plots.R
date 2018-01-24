@@ -7,11 +7,7 @@
 #' @export
 #' @examples
 #'
-#' g1 = SWR1[,5:ncol(SWR1)]
-#' g0 = SWR0[,5:ncol(SWR0)]
-#'
-#' row.names(g1) <- SWR1[,4]
-#' row.names(g0) <- SWR0[,4]
+#' g1 <- SWRG1; g0 <- SWRG0
 #'
 #' result.complex <- feature.removal(g1, g0,
 #'     cutoff1=0.95, cutoff0=0.925,
@@ -47,11 +43,7 @@ ggiteration_trace <- function(li) {
 #' @return Table
 #' @examples
 #'
-#' g1 = SWR1[,5:ncol(SWR1)]
-#' g0 = SWR0[,5:ncol(SWR0)]
-#'
-#' row.names(g1) <- SWR1[,4]
-#' row.names(g0) <- SWR0[,4]
+#' g1 <- SWRG1; g0 <- SWRG0
 #'
 #' result.complex <- feature.removal(g1, g0,
 #'     cutoff1=0.95, cutoff0=0.925,
@@ -98,11 +90,7 @@ feature.prevalence <- function(li, index, hist.plot=TRUE) {
 #' @return histogram
 #' @examples
 #'
-#' g1 = SWR1[,5:ncol(SWR1)]
-#' g0 = SWR0[,5:ncol(SWR0)]
-#'
-#' row.names(g1) <- SWR1[,4]
-#' row.names(g0) <- SWR0[,4]
+#' g1 <- SWRG1; g0 <- SWRG0
 #'
 #' result.complex <- feature.removal(g1, g0,
 #'     cutoff1=0.95, cutoff0=0.925,
@@ -128,11 +116,7 @@ feature_hist <- function(li, index) {
 #' @return Vector
 #' @examples
 #'
-#' g1 = SWR1[,5:ncol(SWR1)]
-#' g0 = SWR0[,5:ncol(SWR0)]
-#'
-#' row.names(g1) <- SWR1[,4]
-#' row.names(g0) <- SWR0[,4]
+#' g1 <- SWRG1; g0 <- SWRG0
 #'
 #' result.complex <- feature.removal(g1, g0,
 #'     cutoff1=0.95, cutoff0=0.925,

@@ -12,7 +12,9 @@ Imports:
     magrittr,
     graphics,
     utils,
-    knitr
+    knitr,
+    GenomicRanges,
+    SummarizedExperiment
 URL: https://github.com/cihga39871/iteremoval
 BugReports: https://github.com/cihga39871/iteremoval/issues
 License: GPL-2

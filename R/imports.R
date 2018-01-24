@@ -15,3 +15,9 @@ utils::stack
 
 #' @import knitr
 NULL
+
+#' @import GenomicRanges
+NULL
+
+#' @import SummarizedExperiment
+NULL
