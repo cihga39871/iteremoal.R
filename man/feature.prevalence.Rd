@@ -23,7 +23,7 @@ Compute the feature prevalence after removing the features of
 the first \code{index} iterations.
 }
 \examples{
-
+data(SWRG1); data(SWRG0)
 g1 <- SWRG1; g0 <- SWRG0
 
 result.complex <- feature.removal(g1, g0,

@@ -225,10 +225,11 @@
 #' @export
 #' @author Jiacheng CHUAN
 #' @examples
-#'
+#' data(SWRG1); data(SWRG0)
 #' g1 <- SWRG1; g0 <- SWRG0
 #' result.simple.A <- feature.removal(g1, g0, cutoff1=0.95, cutoff0=0.95)
 #'
+#' data(SummarizedData)
 #' result.simple.B <- feature.removal(SummarizedData, SummarizedData$Group==0,
 #'     cutoff1=0.95, cutoff0=0.95)
 #'
