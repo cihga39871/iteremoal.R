@@ -1,9 +1,8 @@
 #' @import ggplot2
 NULL
 
-#' @importFrom magrittr %>%
-#' @export
-magrittr::`%>%`
+#' @import magrittr
+NULL
 
 #' @importFrom graphics hist
 #' @export
