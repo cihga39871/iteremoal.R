@@ -8,13 +8,8 @@ NULL
 #' @export
 graphics::hist
 
-#' @importFrom utils stack
-#' @export
-utils::stack
-
-#' @importFrom utils read.csv
-#' @export
-utils::read.csv
+#' @import utils
+NULL
 
 #' @import knitr
 NULL

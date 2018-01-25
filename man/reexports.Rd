@@ -4,10 +4,6 @@
 \name{reexports}
 \alias{reexports}
 \alias{hist}
-\alias{reexports}
-\alias{stack}
-\alias{reexports}
-\alias{read.csv}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -16,7 +12,5 @@ below to see their documentation.
 
 \describe{
   \item{graphics}{\code{\link[graphics]{hist}}}
-
-  \item{utils}{\code{\link[utils]{stack}}, \code{\link[utils]{read.csv}}}
 }}
 
