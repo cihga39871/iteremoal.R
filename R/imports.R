@@ -12,6 +12,10 @@ graphics::hist
 #' @export
 utils::stack
 
+#' @importFrom utils read.csv
+#' @export
+utils::read.csv
+
 #' @import knitr
 NULL
 

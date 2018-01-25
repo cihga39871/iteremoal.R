@@ -6,7 +6,6 @@
 #' @param li the list result of \code{feature.removal}.
 #' @export
 #' @examples
-#' data(SWRG1); data(SWRG0)
 #' g1 <- SWRG1; g0 <- SWRG0
 #'
 #' result.complex <- feature.removal(g1, g0,
@@ -42,7 +41,6 @@ ggiteration_trace <- function(li) {
 #' @export
 #' @return Table
 #' @examples
-#' data(SWRG1); data(SWRG0)
 #' g1 <- SWRG1; g0 <- SWRG0
 #'
 #' result.complex <- feature.removal(g1, g0,
@@ -89,7 +87,6 @@ feature.prevalence <- function(li, index, hist.plot=TRUE) {
 #' @export
 #' @return histogram
 #' @examples
-#' data(SWRG1); data(SWRG0)
 #' g1 <- SWRG1; g0 <- SWRG0
 #'
 #' result.complex <- feature.removal(g1, g0,
@@ -115,7 +112,6 @@ feature_hist <- function(li, index) {
 #' @export
 #' @return Vector
 #' @examples
-#' data(SWRG1); data(SWRG0)
 #' g1 <- SWRG1; g0 <- SWRG0
 #'
 #' result.complex <- feature.removal(g1, g0,

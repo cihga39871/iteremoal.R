@@ -225,11 +225,10 @@
 #' @export
 #' @author Jiacheng CHUAN
 #' @examples
-#' data(SWRG1); data(SWRG0)
+#'
 #' g1 <- SWRG1; g0 <- SWRG0
 #' result.simple.A <- feature.removal(g1, g0, cutoff1=0.95, cutoff0=0.95)
 #'
-#' data(SummarizedData)
 #' result.simple.B <- feature.removal(SummarizedData, SummarizedData$Group==0,
 #'     cutoff1=0.95, cutoff0=0.95)
 #'
@@ -257,6 +256,8 @@ feature.removal <- function(g1=NULL, g0=NULL, cutoff1, cutoff0, lt=">",
 			g1 <- SE
 			g0 <- g0.filter
 		}
+	} else if (!(is.null(SE) && is.null(g0.filter))) {
+		stop("Data conflct. You can only input either: (1) g1,g0 (2) SE,g0.filter")
 	}
 
 	# check if `g1` belongs to SummarizedExperiment

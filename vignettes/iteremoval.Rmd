@@ -32,8 +32,8 @@ We expect that higher the value means higher the probability of having a disease
 ```{r}
 library(iteremoval)
 # input two datasets
-data(SWRG1)
-data(SWRG0)
+#data(SWRG1)
+#data(SWRG0)
 removal.stat2 <- feature.removal(SWRG1, SWRG0, cutoff1=0.95, cutoff0=0.95, offset=c(0.25, 0.5, 2, 4))
 ```
 

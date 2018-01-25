@@ -16,7 +16,6 @@ ggplot2 object.
 plot the score of removed feature in each iteration.
 }
 \examples{
-data(SWRG1); data(SWRG0)
 g1 <- SWRG1; g0 <- SWRG0
 
 result.complex <- feature.removal(g1, g0,

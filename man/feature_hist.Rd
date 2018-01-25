@@ -23,7 +23,6 @@ the first \code{index} iterations, and then plot the histogram of remaining
 features. It calls \code{feature.prevalence(..., hist.plot=TRUE)}.
 }
 \examples{
-data(SWRG1); data(SWRG0)
 g1 <- SWRG1; g0 <- SWRG0
 
 result.complex <- feature.removal(g1, g0,
