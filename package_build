@@ -9,7 +9,6 @@ echo $projroot
 echo
 echo ---------- Refreshing manuals ----------
 R -q -e "setwd('$projroot'); source('data-raw/example_data.R'); library(roxygen2); roxygenize()"
-# R -q -e "setwd('$projroot'); library(roxygen2); roxygenize()"
 
 ### build
 echo

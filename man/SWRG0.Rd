@@ -4,13 +4,21 @@
 \name{SWRG0}
 \alias{SWRG0}
 \title{Group 0 data}
-\format{A data frame with 22 variables: \code{G0Sample1}, \code{G0Sample2}, ...,
-  \code{G0Sample22}.}
+\format{A data frame with 22 variables: \code{G0Sample1},
+\code{G0Sample2}, ..., \code{G0Sample22}.}
 \usage{
 SWRG0
 }
 \description{
-Probability data of control samples.
+Probability data of control samples. Column represents samples,
+row represents genome ranges related to a disease.
+}
+\details{
+We identified 299 genomic regions related to the methylation status
+of a disease. Then, we sequenced the cfDNA of 44 subjects. 22 were malignant,
+ while others were normal. We built a statistical model to compute the
+ probability of the disease for each region and subject, and this dataframe
+ contains the probabilities of 299 regions and 22 normal samples.
 }
 \seealso{
 Other data: \code{\link{SWRG1}},

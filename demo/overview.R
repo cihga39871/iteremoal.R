@@ -1,25 +1,15 @@
 
 library(iteremoval)
 
-g1 = SWR1[,5:ncol(SWR1)]
-g0 = SWR0[,5:ncol(SWR0)]
+removal.stat <- feature_removal(SWRG1, SWRG0, cutoff1=0.95, cutoff0=0.95,
+								 offset=c(0.25, 0.5, 2, 4))
 
-row.names(g1) <- SWR1[,4]
-row.names(g0) <- SWR0[,4]
+removal.stat <- feature_removal(SummarizedData, SummarizedData$Group==0,
+								 cutoff1=0.95, cutoff0=0.95,
+								 offset=c(0.25, 0.5, 2, 4))
 
+ggiteration_trace(removal.stat) + theme_bw()
 
-removal.stat <- feature.removal(g1, g0, cutoff1=0.95, cutoff0=0.95)
+features <- feature_prevalence(removal.stat, index=255, hist.plot=TRUE)
 
-removal.stat2 <- feature.removal(g1, g0, cutoff1=0.95, cutoff0=0.95, lt=">",
-								 offset=c(0.5, 1, 2),
-								 weight.method="reciprocal.colSums",
-								 scoreStandardization.method="min_max",
-								 scoreCombine.method="linear.combine")
-
-ggiteration_trace(removal.stat2) + theme_bw()
-
-
-features <- feature.prevalence(removal.stat2, index=0.5, hist.plot=TRUE)
-features2 <- feature.prevalence(removal.stat2, index=255, hist.plot=TRUE)
-
-screened.features <- feature.screen(features2, prevalence=3)
+feature_screen(features, prevalence=4)

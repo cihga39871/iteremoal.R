@@ -7,7 +7,7 @@
 ggiteration_trace(li)
 }
 \arguments{
-\item{li}{the list result of \code{feature.removal}.}
+\item{li}{the list result of \code{feature_removal}.}
 }
 \value{
 ggplot2 object.
@@ -18,7 +18,7 @@ plot the score of removed feature in each iteration.
 \examples{
 g1 <- SWRG1; g0 <- SWRG0
 
-result.complex <- feature.removal(g1, g0,
+result.complex <- feature_removal(g1, g0,
     cutoff1=0.95, cutoff0=0.925,
     offset=c(0.5, 1, 2))
 

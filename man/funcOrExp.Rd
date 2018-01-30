@@ -9,17 +9,18 @@ funcOrExp(method, ...)
 \arguments{
 \item{method}{if the class of method is "character", regarding method as a
 function and evaluating \code{THE_METHOD(...)}. If the class of method is
-"function", return the result of \code{method(...)}. If the class of method is
-"expression", return the result of \code{eval(method)}.}
+"function", return the result of \code{method(...)}. If the class of method
+is "expression", return the result of \code{eval(method)}.}
 
-\item{...}{arguments passed onto method if the class of method is "character"
-or "function".}
+\item{...}{arguments passed onto method if the class of method is
+"character" or "function".}
 }
 \value{
 Evaluated result.
 }
 \description{
-Evaluating a function or expression by the type of \code{method}.
+Evaluating a function or expression by the type of
+\code{method}.
 }
 \examples{
 funcOrExp(sample, 5)

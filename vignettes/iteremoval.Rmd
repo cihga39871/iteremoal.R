@@ -16,13 +16,14 @@ biocLite("iteremoval")
 ```
 
 ## An example
-An example is demonstrated to show how the package filters features iteratively.
+
+We identified 299 genomic regions related to the methylation status of a disease. Then, we sequenced the cfDNA of 44 subjects. 22 were malignant, while others were normal. We built a statistical model to compute the probability of the disease for each region and subject, and we use the probability data to demonstrate how the package works.
 
 The input files are in either format:
 
-1. Two datasets, `SWRG1`(malignant individuals) and `SWRG0`(normal individuals). Each row of the two datasets indicates a gene locus, and the columns are the probabilities. 
+1. Two datasets, `SWRG1`(malignant individuals) and `SWRG0`(normal individuals). Each row of the two datasets indicates a genomic region, and the columns are the probabilities. 
 
-2. A `SummarizedExperiment::`SummarizedExperiment object (`SummarizedData`) and a logical vector (`SummarizedData$Group==0`) to distinguish normal samples from all samples.
+2. A `SummarizedExperiment::`SummarizedExperiment object (`SummarizedData`) and a logical vector (`SummarizedData$Group==0`) to distinguish normal samples from all samples. Note: Name 'Group' is not required.
 
 We expect that higher the value means higher the probability of having a disease. However, we discover that not all genes are related to the disease. Therefore, we use the package `iteremoval` to select the gene locus with high probability in malignant samples and low probability in normal samples. 
 
@@ -32,40 +33,43 @@ We expect that higher the value means higher the probability of having a disease
 ```{r}
 library(iteremoval)
 # input two datasets
-removal.stat2 <- feature.removal(SWRG1, SWRG0, cutoff1=0.95, cutoff0=0.95, offset=c(0.25, 0.5, 2, 4))
+removal.stat <- feature_removal(SWRG1, SWRG0, cutoff1=0.95, cutoff0=0.95, 
+								 offset=c(0.25, 0.5, 2, 4))
 ```
 
-```{r eval=FALSE}
+```{r eval=TRUE}
 # input SummarizedExperiment object
-removal.stat2 <- feature.removal(SummarizedData, SummarizedData$Group==0, cutoff1=0.95, cutoff0=0.95, offset=c(0.25, 0.5, 2, 4))
+removal.stat <- feature_removal(SummarizedData, SummarizedData$Group==0, 
+								 cutoff1=0.95, cutoff0=0.95, 
+								 offset=c(0.25, 0.5, 2, 4))
 ```
 
 It is the core function of the package. The first four parameters are required. A vector of `offset` means doing the whole computational process with different offsets *respectively*, and you can also define only one numeric number to `offset`. To get a overall information of features, the iteration will not stop until there is no feature to remove.
 
-- You can also lower `cutoff0` and higher `cutoff1` to reduce overfitting. Why? You can type `?feature.removal` to see the whole algorithm.
+- You can also lower `cutoff0` and higher `cutoff1` to reduce overfitting. Why? You can type `?feature_removal` to see the whole algorithm.
 
 ### Ploting the iteration trace of removed features' scores
 It is useful to visulize how each feature is removed in the iterative process. The package provides a way to plot the scores of features being removed in each iteration.
 
 ```{r echo=TRUE}
-ggiteration_trace(removal.stat2) + theme_bw()
+ggiteration_trace(removal.stat) + theme_bw()
 ```
 
 `ggiteration_trace` returns a ggplot2 object, so `+` is used in the same way as `ggplot2` package.
 
-X-axis is the iteration index, and Y-axis is the score of the feature being removed, and the legend is the offset you passed to `feature.removal`. Normally, you can stop removing features from the index of which the socres fluctuate drastically.
+X-axis is the iteration index, and Y-axis is the score of the feature being removed, and the legend is the offset you passed to `feature_removal`. Normally, you can stop removing features from the index of which the socres fluctuate drastically.
 
 ### Generating the feature list
 Once you confirm the iteration index cutoff, you can generate the feature list. Since using a vector of `offset` and the features are removed with different `cutoff` seperately, the remaining feature lists are not unique for multiple cutoffs. Thus, we compute the feature prevalence for the feature lists, using:
 
 ```{r echo=TRUE}
-features2 <- feature.prevalence(removal.stat2, index=255, hist.plot=TRUE)
-features2
+features <- feature_prevalence(removal.stat, index=255, hist.plot=TRUE)
+features
 ```
 
 ### Screening the features with prevalence
 At last, you can see the prevalence histogram of the features because of multiple offsets. You can specify a cutoff for the prevalence, and output the final feature list.
 
 ```{r echo=TRUE}
-feature.screen(features2, prevalence=4)
+feature_screen(features, prevalence=4)
 ```

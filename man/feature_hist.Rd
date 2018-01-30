@@ -7,7 +7,7 @@
 feature_hist(li, index)
 }
 \arguments{
-\item{li}{the list result of \code{feature.removal}.}
+\item{li}{the list result of \code{feature_removal}.}
 
 \item{index}{removing the features of the first \code{index} iterations. It
 allows a positive integer or a proper fraction. If inproper fraction, it is
@@ -20,12 +20,12 @@ histogram
 Compute the feature prevalence (present in different cutoffs)
 after removing the features of
 the first \code{index} iterations, and then plot the histogram of remaining
-features. It calls \code{feature.prevalence(..., hist.plot=TRUE)}.
+features. It calls \code{feature_prevalence(..., hist.plot=TRUE)}.
 }
 \examples{
 g1 <- SWRG1; g0 <- SWRG0
 
-result.complex <- feature.removal(g1, g0,
+result.complex <- feature_removal(g1, g0,
     cutoff1=0.95, cutoff0=0.925,
     offset=c(0.5, 1, 2))
 

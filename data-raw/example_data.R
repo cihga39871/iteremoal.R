@@ -611,14 +611,14 @@ SWRG1 <- read.csv(text = table, row.names = 1)
 coordinates <- as(sprintf("%s:%s-%s", "chrN", 1:299, 2:300), "GRanges")
 
 se1 <- SummarizedExperiment(assays=SimpleList(prob=as.matrix(SWRG1)),
-							rowRanges=coordinates,
-							colData=data.frame(Group=rep(1,22),
-											   row.names=colnames(SWRG1)))
+                            rowRanges=coordinates,
+                            colData=data.frame(Group=rep(1,22),
+                                               row.names=colnames(SWRG1)))
 
 se0 <- SummarizedExperiment(assays=SimpleList(prob=as.matrix(SWRG0)),
-							rowRanges=coordinates,
-							colData=data.frame(Group=rep(0,22),
-											   row.names=colnames(SWRG0)))
+                            rowRanges=coordinates,
+                            colData=data.frame(Group=rep(0,22),
+                                               row.names=colnames(SWRG0)))
 
 SummarizedData <- cbind(se1,se0)
 
