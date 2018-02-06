@@ -25,7 +25,8 @@ ggiteration_trace <- function(li) {
     stacked.removed.scores$Index <- li$removed.scores$Index
 
     ggplot(stacked.removed.scores) +
-        geom_line(aes(stacked.removed.scores$Index, values, color=stacked.removed.scores$ind)) +
+        geom_line(aes(stacked.removed.scores$Index, values,
+        color=stacked.removed.scores$ind)) +
         labs(x = "Index", y = "Minimum Prediction Value", color="Offset")
 }
 
