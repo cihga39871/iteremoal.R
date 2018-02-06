@@ -53,10 +53,11 @@ NULL
             g0.score <- apply(g0.signal, 1, function(x) x * g0.weight) %>% t
 
             # scoreStandardization
-            g1.score.feature <- rowSums(g1.score, na.rm=TRUE) %>%
-                funcOrExp(scoreStandardization.method, .)
-            g0.score.feature <- rowSums(g0.score, na.rm=TRUE) %>%
-                funcOrExp(scoreStandardization.method, .)
+
+            g1.score.feature <- funcOrExp(scoreStandardization.method,
+                rowSums(g1.score, na.rm=TRUE))
+            g0.score.feature <- funcOrExp(scoreStandardization.method,
+                rowSums(g0.score, na.rm=TRUE))
 
             # scoreCombine
             score.feature <- funcOrExp(scoreCombine.method, g1.score.feature,

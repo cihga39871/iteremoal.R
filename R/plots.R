@@ -21,18 +21,17 @@ ggiteration_trace <- function(li) {
     if (is.null(li$removed.scores))
         stop("`li` do not contain 'removed.scores'. Generate `li` with function `feature_removal`.")
 
-    stacked.removed.scores <- stack(li$removed.scores, select = -Index)
+    stacked.removed.scores <- stack(li$removed.scores, select = -1)
     stacked.removed.scores$Index <- li$removed.scores$Index
 
     ggplot(stacked.removed.scores) +
-        geom_line(aes(Index, values, color=ind)) +
+        geom_line(aes(stacked.removed.scores$Index, values, color=stacked.removed.scores$ind)) +
         labs(x = "Index", y = "Minimum Prediction Value", color="Offset")
 }
 
 
-#' @importFrom graphics hist
-#' @export
-graphics::hist
+#' @import graphics
+NULL
 
 #' @title Feature prevalence
 #' @family prevalencestat plot
@@ -68,15 +67,15 @@ feature_prevalence <- function(li, index, hist.plot=TRUE) {
     # check: index >= 1 ? real index : percent of index
     if (0 <= index && index < 1) {
         index <- as.integer(nfeature * index) + 1L
-    } else if (index < 0)
+    } else if (index < 0) {
         stop("`index` < 0. `index` is either a positive integer or a decimal in [0,1) as a quantile.")
-    else if (index > nfeature)
+    } else if (index > nfeature)
         stop("`index` > the feature number.")
 
     features.mt <- li$removed.feature_names[as.integer(index):nfeature,
                                             2:ncol(li$removed.feature_names)]
-    features.all <- features.mt %>% as.vector %>%
-        as.matrix(ncol=1, nrow=ncol(.)*nrow(.)) %>% sort
+    features.all <- features.mt %>% as.vector %>% as.matrix(ncol=1) %>% sort
+
     Features <- table(unlist(features.all)) %>% sort
     if (hist.plot) hist(Features)
     return(Features)
