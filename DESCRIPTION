@@ -1,6 +1,6 @@
 Package: iteremoval
 Title: Iteration removal method for feature selection
-Version: 0.99.11
+Version: 0.99.12
 Authors@R: person("Chuan", "Jiacheng", email = "jiacheng_chuan@outlook.com", role = c("aut", "cre"))
 Author: Jiacheng Chuan [aut, cre]
 Maintainer: Jiacheng Chuan <jiacheng_chuan@outlook.com>

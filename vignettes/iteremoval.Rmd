@@ -17,7 +17,7 @@ biocLite("iteremoval")
 
 ## An example
 
-We identified 299 genomic regions related to the methylation status of a disease. Then, we sequenced the cfDNA of 44 subjects. 22 were malignant, while others were normal. We built a statistical model to compute the probability of the disease for each region and subject, and we use the probability data to demonstrate how the package works.
+We identified 299 genomic regions related to the methylation status of a disease. Then, we sequenced the cfDNA of 44 subjects. 22 were malignant, while others were normal. We built a statistical model to compute the probability of the disease for each region and subject. Thus, we use the probability data to demonstrate how the package works.
 
 The input files are in either format:
 
@@ -57,10 +57,10 @@ ggiteration_trace(removal.stat) + theme_bw()
 
 `ggiteration_trace` returns a ggplot2 object, so `+` is used in the same way as `ggplot2` package.
 
-X-axis is the iteration index, and Y-axis is the score of the feature being removed, and the legend is the offset you passed to `feature_removal`. Normally, you can stop removing features from the index of which the socres fluctuate drastically.
+X-axis is the iteration index, and Y-axis is the score of the feature being removed, and the legend is the offset you passed to `feature_removal`. Normally, you can stop removing features from the index of which the scores fluctuate drastically.
 
 ### Generating the feature list
-Once you confirm the iteration index cutoff, you can generate the feature list. Since using a vector of `offset` and the features are removed with different `cutoff` seperately, the remaining feature lists are not unique for multiple cutoffs. Thus, we compute the feature prevalence for the feature lists, using:
+Once you confirm the cutoff of iteration index, you can generate the feature list. Since using a vector of `offset` and the features are removed with different `cutoff` seperately, the remaining feature lists are not unique for multiple cutoffs. Thus, we compute the feature prevalence for the feature lists, using:
 
 ```{r echo=TRUE}
 features <- feature_prevalence(removal.stat, index=255, hist.plot=TRUE)
