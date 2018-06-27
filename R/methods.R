@@ -118,5 +118,5 @@ NULL
 #' linear_combine(0.2, 0.3, 2)
 #' linear_combine(1:2, 3:4, 1)
 linear_combine <- function(g1.score.feature, g0.score.feature, offset=1) {
-    g1.score.feature * offset + g0.score.feature
+    g1.score.feature * offset - g0.score.feature
 }
